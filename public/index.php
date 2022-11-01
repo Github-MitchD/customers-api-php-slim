@@ -15,11 +15,17 @@ $app->addRoutingMiddleware();
 $app->add(new BasePathMiddleware($app));
 $app->addErrorMiddleware(true, true, true);
 
+/**
+ * GET home page
+ */
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write("Hello World !");
     return $response;
 });
 
+/**
+ * GET all customers
+ */
 $app->get('/customers-data/all', function (Request $request, Response $response) {
     $sql = "SELECT * FROM customers";
 
@@ -46,6 +52,9 @@ $app->get('/customers-data/all', function (Request $request, Response $response)
     }
 });
 
+/**
+ * POST add customers
+ */
 $app->post('/customers-data/add', function (Request $request, Response $response, array $args) {
     $data = $request->getParsedBody();
     $name = $data["name"];
@@ -82,6 +91,9 @@ $app->post('/customers-data/add', function (Request $request, Response $response
     }
 });
 
+/**
+ * PUT update customer by ID
+ */
 $app->put('/customers-data/update/{id}', function (Request $request, Response $response, array $args) {
     $id = $request->getAttribute('id');
     $data = $request->getParsedBody();
@@ -124,6 +136,9 @@ $app->put('/customers-data/update/{id}', function (Request $request, Response $r
     }
 });
 
+/**
+ * DELETE delete customer by ID
+ */
 $app->delete('/customers-data/delete/{id}', function (Request $request, Response $response, array $args) {
     $id = $args["id"];
 
